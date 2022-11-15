@@ -30,11 +30,13 @@ instR(michelAnge, david, aCree).
 instR(michelAnge, sonnets, aEcrit).
 instR(vinci, joconde, aCree).
 
-concept(C).
-concept(C):- cnamea(C).
-concept(C):- cnamena(C).
-
+% vérifier la correction syntaxique et la correction sémantique de la Tbox et de la Abox en entrées.
+concept().
 autoref().
 pas_autoref().
 traitement_Tbox().
 traitement_Abox().
+
+%[(sculpteur,and(personne,some(aCree,sculpture))),(auteur,and(personne,some(aEcrit,livre))),(editeur,and(personne,and(not(some(aEcrit,livre)),some(aEdite,livre)))),(parent,and(personne,some(aEnfant,anything)))]. 
+%[(michelAnge,personne),(david,sculpture),(sonnets,livre),(vinci,personne),(joconde,objet)].
+%[(michelAnge, david, aCree), (michelAnge, sonnet, aEcrit),(vinci, joconde, aCree)].
