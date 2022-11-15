@@ -1,7 +1,6 @@
 equiv(sculpteur,and(personne,some(aCree,sculpture))).
 equiv(auteur,and(personne,some(aEcrit,livre))).
-equiv(editeur,and(personne,and(not(some(aEcrit,livre)),some(aEdite
-,livre)))).
+equiv(editeur,and(personne,and(not(some(aEcrit,livre)),some(aEdite,livre)))).
 equiv(parent,and(personne,some(aEnfant,anything))).
 cnamea(personne).
 cnamea(livre).
