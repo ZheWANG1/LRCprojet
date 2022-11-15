@@ -29,3 +29,12 @@ inst(joconde,objet).
 instR(michelAnge, david, aCree).
 instR(michelAnge, sonnets, aEcrit).
 instR(vinci, joconde, aCree).
+
+concept(C).
+concept(C):- cnamea(C).
+concept(C):- cnamena(C).
+
+autoref().
+pas_autoref().
+traitement_Tbox().
+traitement_Abox().
