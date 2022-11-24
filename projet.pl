@@ -1,42 +1,31 @@
-equiv(sculpteur,and(personne,some(aCree,sculpture))).
-equiv(auteur,and(personne,some(aEcrit,livre))).
-equiv(editeur,and(personne,and(not(some(aEcrit,livre)),some(aEdite,livre)))).
-equiv(parent,and(personne,some(aEnfant,anything))).
-cnamea(personne).
-cnamea(livre).
-cnamea(objet).
-cnamea(sculpture).
-cnamea(anything).
-cnamea(nothing).
-cnamena(auteur).
-cnamena(editeur).
-cnamena(sculpteur).
-cnamena(parent).
-iname(michelAnge).
-iname(david).
-iname(sonnets).
-iname(vinci).
-iname(joconde).
-rname(aCree).
-rname(aEcrit).
-rname(aEdite).
-rname(aEnfant).
-inst(michelAnge,personne).
-inst(david,sculpture).
-inst(sonnets,livre).
-inst(vinci,personne).
-inst(joconde,objet).
-instR(michelAnge, david, aCree).
-instR(michelAnge, sonnets, aEcrit).
-instR(vinci, joconde, aCree).
+% Include
+:-[init].
+:-[utils].
 
-% vérifier la correction syntaxique et la correction sémantique de la Tbox et de la Abox en entrées.
-concept().
-autoref().
-pas_autoref().
-traitement_Tbox().
-traitement_Abox().
+% ----------------------------------------------------------------
+% Partie 1 - Etape préliminaire de vérification et de mise en forme de la Tbox et de la Abox
+% ----------------------------------------------------------------
 
-%[(sculpteur,and(personne,some(aCree,sculpture))),(auteur,and(personne,some(aEcrit,livre))),(editeur,and(personne,and(not(some(aEcrit,livre)),some(aEdite,livre)))),(parent,and(personne,some(aEnfant,anything)))]. 
-%[(michelAnge,personne),(david,sculpture),(sonnets,livre),(vinci,personne),(joconde,objet)].
-%[(michelAnge, david, aCree), (michelAnge, sonnet, aEcrit),(vinci, joconde, aCree)].
+% Vérifier la correction sémantique et syntaxique des expressions des concepts atomiques ou complexes.
+concept([C|_]) :- setof(X, cnamea(X), L), member(C, L), !.
+concept([C|_]) :- setof(X, cnamena(X), L), member(C, L), !.
+concept([and(C1,C2)|_]) :- concept([C1]), concept([C2]), !.
+concept([or(C1,C2)|_]) :- concept([C1]), concept([C2]), !.
+concept([not(C)|_]) :- concept([C]), !.
+concept([some(R,C)|_]) :- rname(R), concept([C]), !.
+concept([all(R,C)|_]) :- rname(R), concept([C]), !.
+
+% Tester si ce concept est auto-référent.
+
+
+
+traitement_Tbox(Tbox) :- setof((X, Y), equiv(X, Y), Tbox), !.
+traitement_Abox(Abi, Abr) :- aboxInst(Abi), aboxRole(Abr), !.
+aboxInst(Abi) :- setof((X, Y), inst(X, Y), Abi), !.
+aboxRole(Abr) :- setof((X, Y, Z), instR(X, Y, Z), Abr), !.
+
+
+% tbox([]).
+% tbox(L) :- setof((X,Y), equiv(X,Y), L).
+% tbox([C1|C2]) :- setof((X,Y), equiv(X,Y), L), member(C1, L), tbox(C2).
+
